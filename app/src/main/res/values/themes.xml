@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.MotorCalc" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/primaryRed</item>
+        <item name="colorPrimaryVariant">@color/buttonPrimary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/buttonPrimary</item>
+        <item name="colorOnSecondary">@color/onButton</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/card</item>
+        <item name="colorSurface">@color/card</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/Widget.MotorCalc.Button</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/primaryRed</item>
+    </style>
+
+    <!-- Optional custom button style -->
+    <style name="Widget.MotorCalc.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/buttonPrimary</item>
+        <item name="android:textColor">@color/onButton</item>
+    </style>
+
+</resources>

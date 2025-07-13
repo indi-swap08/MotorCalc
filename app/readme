@@ -1,0 +1,34 @@
+Cleaned-up Android Project Structure (No Fragment):
+vbnet
+Copy
+Edit
+MyApplication/
+├── app/
+│   ├── build.gradle
+│   └── src/
+│       ├── main/
+│       │   ├── AndroidManifest.xml
+│       │   ├── java/
+│       │   │   └── com/
+│       │   │       └── example/
+│       │   │           └── myapplication/
+│       │   │               ├── MainActivity.kt
+│       │   │               ├── viewmodel/
+│       │   │               │   └── CalculateViewModel.kt          ← Optional, if you're using MVVM
+│       │   │               ├── data/
+│       │   │               │   └── model/
+│       │   │               │       └── CalculationData.kt         ← Data class for calculations
+│       │   │               └── utils/
+│       │   │                   └── Formatter.kt                   ← Optional helper class
+│       │   └── res/
+│       │       ├── layout/
+│       │       │   └── activity_main.xml                          ← Main UI layout
+│       │       ├── values/
+│       │       │   ├── strings.xml
+│       │       │   ├── colors.xml
+│       │       │   └── themes.xml
+│       │       └── drawable/
+│       │           └── (icons, backgrounds, etc.)
+│       └── test/                                                  ← Unit tests (optional)
+├── build.gradle (Project level)
+└── settings.gradle

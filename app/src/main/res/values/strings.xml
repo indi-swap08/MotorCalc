@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MotorCalc</string>
+    <string name="hint_amount">Vehicle Price</string>
+    <string name="hint_interest">Interest(%)</string>
+    <string name="hint_downPayment">Down Payment(%)</string>
+    <string name="hint_discount">Discount(QAR)</string>
+    <string name="hint_processingFee">Processing Fee(%)</string>
+    <string name="hint_emi">EMI (Months)</string>
+    <string name="text_insurance">Add Motor Insurance(2.5%)</string>
+    <string name="text_submit">Submit</string>
+
+    <string name="text_result">Submit</string>
+</resources>
