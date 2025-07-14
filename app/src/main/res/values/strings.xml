@@ -6,8 +6,26 @@
     <string name="hint_discount">Discount(QAR)</string>
     <string name="hint_processingFee">Processing Fee(%)</string>
     <string name="hint_emi">EMI (Months)</string>
-    <string name="text_insurance">Add Motor Insurance(2.5%)</string>
-    <string name="text_submit">Submit</string>
+    <string name="text_addInsurance">Add Motor Insurance</string>
+    <string name="text_insurance">Insurance(%)</string>
+    <string name="text_submit">Calculate</string>
 
-    <string name="text_result">Submit</string>
+    <!-- for results table -->
+    <string name="label_vehicle_price">Vehicle Price:</string>
+    <string name="label_discount">Discount:</string>
+    <string name="label_net_vehicle">Net Vehicle After OFFER:</string>
+    <string name="label_motor_insurance">Motor Insurance:</string>
+    <string name="label_total_price">Total Price:</string>
+    <string name="label_down_payment">Down Payment:</string>
+    <string name="label_finance_amount">Finance Amount:</string>
+    <string name="label_processing_fee">Processing Fee:</string>
+    <string name="label_total_down_payment">Total Down Payment:</string>
+    <string name="label_interest">Interest:</string>
+    <string name="label_emi">EMI:</string>
+    <string name="label_amount_per_month">Amount (per month):</string>
+
+    <!-- Format strings -->
+    <string name="format_percentage_value">%1$s%%: %2$s</string>
+    <string name="format_percentage_value_spaced">%1$s%% : %2$s</string>
+    <string name="format_years_months">%1$s years (%2$s months)</string>
 </resources>

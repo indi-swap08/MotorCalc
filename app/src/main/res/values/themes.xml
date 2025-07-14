@@ -1,35 +1,67 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Base application theme -->
     <style name="Theme.MotorCalc" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/primaryRed</item>
-        <item name="colorPrimaryVariant">@color/buttonPrimary</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
 
-        <!-- Secondary -->
+        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/buttonPrimary</item>
         <item name="colorOnSecondary">@color/onButton</item>
 
-        <!-- Background -->
+        <!-- Background colors -->
         <item name="android:colorBackground">@color/card</item>
         <item name="colorSurface">@color/card</item>
         <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorBackgroundFloating">@color/bottomBar</item>
 
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/textPrimary</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
 
-        <!-- Button -->
+        <!-- Component styles -->
         <item name="materialButtonStyle">@style/Widget.MotorCalc.Button</item>
+        <item name="textInputStyle">@style/Widget.MotorCalc.TextInputLayout</item>
+        <item name="checkboxStyle">@style/Widget.MotorCalc.CompoundButton.CheckBox</item>
 
         <!-- Status bar -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/primaryRed</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor" tools:targetApi="o">?attr/colorPrimary</item>
+
+        <!-- Action bar/elevation -->
+        <item name="elevationOverlayEnabled">true</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MotorCalc.ActionBar</item>
     </style>
 
-    <!-- Optional custom button style -->
+    <!-- Button Style -->
     <style name="Widget.MotorCalc.Button" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/buttonPrimary</item>
         <item name="android:textColor">@color/onButton</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- TextInputLayout Style -->
+    <style name="Widget.MotorCalc.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/textSecondary</item>
+        <item name="hintTextColor">@color/textSecondary</item>
+        <item name="android:textColorHint">@color/textSecondary</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+    </style>
+
+    <!-- CheckBox Style -->
+    <style name="Widget.MotorCalc.CompoundButton.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/buttonPrimary</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <!-- Action Bar Theme -->
+    <style name="ThemeOverlay.MotorCalc.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@color/onPrimary</item>
+        <item name="android:textColorSecondary">@color/onPrimary</item>
     </style>
 
 </resources>

@@ -9,127 +9,401 @@
             name="calc_vm"
             type="com.example.motorcalc.viewmodel.CalculateViewModel" />
     </data>
-    <com.google.android.material.card.MaterialCardView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        app:cardCornerRadius="16dp"
-        app:cardBackgroundColor="@color/card">
-
-
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/amountLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        <TextView
+            android:id="@+id/formHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:padding="21dp"
+            android:text="@string/app_name"
+            android:textColor="@color/onPrimary"
+            android:background="@drawable/gradient_red"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="5dp"
+            app:cardBackgroundColor="@color/card"
+            app:cardCornerRadius="16dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_amount">
+                android:padding="25dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/amount"
+                <!-- 1. Amount (Full Width) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/amountLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_amount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.amount}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 2. Down Payment -->
+
+                <!-- 3. Interest -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/downPaymentLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:hint="@string/hint_downPayment"
+                    app:layout_constraintBottom_toTopOf="@id/processingFeeLayout"
+                    app:layout_constraintEnd_toStartOf="@+id/interestLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/amountLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/downPayment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.downPayment}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/interestLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/hint_interest"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/downPaymentLayout"
+                    app:layout_constraintBottom_toTopOf="@id/emiMonthsLayout"
+                    app:layout_constraintTop_toBottomOf="@id/amountLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/interest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.interest}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 4. Processing Fee -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/processingFeeLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:hint="@string/hint_processingFee"
+                    app:layout_constraintEnd_toStartOf="@id/emiMonthsLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/discountLayout"
+                    app:layout_constraintTop_toBottomOf="@id/downPaymentLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/processingFee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.processingFee}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 5. EMI Months -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emiMonthsLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="18dp"
+                    android:hint="@string/hint_emi"
+                    app:layout_constraintBottom_toTopOf="@+id/discountLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/processingFeeLayout"
+                    app:layout_constraintTop_toBottomOf="@id/interestLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emiMonths"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.emiMonths}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 6. Discount -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/discountLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:hint="@string/hint_discount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/processingFeeLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/discount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.discount}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 7. Insurance Checkbox -->
+                <CheckBox
+                    android:id="@+id/motorInsurance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:checked="@={calc_vm.motorInsurance}"
+                    android:text="@string/text_addInsurance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/discountLayout" />
+
+                <!-- 5. Insurance Percent -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/insuranceLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="18dp"
+                    android:hint="@string/text_insurance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/motorInsurance"
+                    app:layout_constraintTop_toBottomOf="@+id/discountLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/insurance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:text="@={calc_vm.insurance}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 8. Submit Button (Full Width) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/text_submit"
+                    app:cornerRadius="16dp"
+                    android:letterSpacing="0.1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/motorInsurance" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Results CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/resultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="invisible"
+            app:cardBackgroundColor="@color/card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:stretchColumns="1">
+
+                <!-- Vehicle Price -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_vehicle_price"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="@{calc_vm.formattedAmt}"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/textSecondary"/>
+                </TableRow>
+
+                <!-- Discount -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_discount"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="@{calc_vm.formattedDisc}"
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Net Vehicle After OFFER -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_net_vehicle"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="@{calc_vm.formattedAfterDiscount}"
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Motor Insurance -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_motor_insurance"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s%%: %s", calc_vm.insurance, calc_vm.formattedInsurance)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- TOTAL PRICE -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_total_price"
+                        android:textStyle="bold"
+                        android:textColor="@color/textPrimary"/>
+                    <TextView
+                        android:text="@{calc_vm.formattedTotal}"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Divider -->
+                <View
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Down Payment -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_down_payment"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s%% : %s", calc_vm.downPayPercent, calc_vm.formattedDownPay)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Finance Amount -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_down_payment"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s%% : %s", calc_vm.financePercent, calc_vm.formattedFinanceAmt)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Processing Fee -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_processing_fee"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s%% : %s", calc_vm.procFee, calc_vm.formattedProcessFee)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Total Down Payment -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_total_down_payment"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text="@{calc_vm.formattedTotalDownPay}"
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Interest -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_interest"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s%%: %s", calc_vm.intRate, calc_vm.formattedTotalInterest)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- EMI -->
+                <TableRow>
+                    <TextView
+                        android:text="@string/label_emi"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:text='@{String.format("%s years (%s months)", calc_vm.emiYear, calc_vm.emiMonthsVal)}'
+                        android:gravity="end"
+                        android:textColor="@color/textPrimary"/>
+                </TableRow>
+
+                <!-- Amount per month -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.amount}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:orientation="horizontal"
+                    android:background="@color/lightHighlight"
+                    android:padding="8dp"
+                    android:layout_marginTop="5dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/downPaymentLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_downPayment">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/label_amount_per_month"
+                        android:textColor="@color/primaryRed"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/downPayment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.downPayment}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/interestLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_interest">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/interest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.interest}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/processingFeeLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_processingFee">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/processingFee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.processingFee}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_emi">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/emiMonths"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.emiMonths}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/discountLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/hint_discount">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/discount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:text="@={calc_vm.discount}">
-                </com.google.android.material.textfield.TextInputEditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <CheckBox
-                android:id="@+id/motorInsurance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="@string/text_insurance"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_submit"
-                app:cornerRadius="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{calc_vm.formattedEmiAmt}"
+                        android:textColor="@color/primaryRed"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </TableLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

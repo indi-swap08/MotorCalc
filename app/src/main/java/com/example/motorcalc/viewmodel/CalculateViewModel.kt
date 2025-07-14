@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.lang.System.console
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 class CalculateViewModel : ViewModel() {
 
@@ -13,48 +16,90 @@ class CalculateViewModel : ViewModel() {
     val downPayment = MutableLiveData<String>()
     val processingFee = MutableLiveData<String>()
     val emiMonths = MutableLiveData<String>()
-    val motorInsuranceChecked = MutableLiveData<Boolean>()
-    val result = MutableLiveData<String>()
+    val motorInsurance = MutableLiveData<Boolean>()
+    val insurance = MutableLiveData<String>()
+
+    // Formatted result fields
+    val formattedAmt = MutableLiveData<String>()
+    val formattedDisc = MutableLiveData<String>()
+    val formattedAfterDiscount = MutableLiveData<String>()
+    val formattedInsurance = MutableLiveData<String>()
+    val formattedTotal = MutableLiveData<String>()
+    val downPayPercent = MutableLiveData<String>()
+    val formattedDownPay = MutableLiveData<String>()
+    val financePercent = MutableLiveData<String>()
+    val formattedFinanceAmt = MutableLiveData<String>()
+    val procFee = MutableLiveData<String>()
+    val formattedProcessFee = MutableLiveData<String>()
+    val formattedTotalDownPay = MutableLiveData<String>()
+    val intRate = MutableLiveData<String>()
+    val formattedTotalInterest = MutableLiveData<String>()
+    val emiYear = MutableLiveData<String>()
+    val emiMonthsVal = MutableLiveData<String>()
+    val formattedEmiAmt = MutableLiveData<String>()
+
+//    private val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault()).apply {
+//        maximumFractionDigits = 2
+//        minimumFractionDigits = 2
+//    }
+
+    // Custom QAR formatter (English format)
+    private val qarFormatter: NumberFormat by lazy {
+        NumberFormat.getNumberInstance(Locale.ENGLISH).apply {
+            maximumFractionDigits = 2
+            minimumFractionDigits = 2
+        }
+    }
+
+    fun formatAsQar(amount: Double): String {
+        return "QAR ${qarFormatter.format(amount)}"
+    }
 
     fun calculate() {
-
-        Log.i("Calculate","Raw inputs: amount='${amount.value}', " +
-                "insurance = '${motorInsuranceChecked.value}', " +
-                "discount='${discount.value}', downPayment='${downPayment.value}'")
         val amt = amount.value?.toDoubleOrNull() ?: 0.0
-        val intRate = interest.value?.toDoubleOrNull() ?: 0.0
+        val intRateVal = interest.value?.toDoubleOrNull() ?: 0.0
         val disc = discount.value?.toDoubleOrNull() ?: 0.0
-        val downPayPercent = downPayment.value?.toDoubleOrNull() ?: 0.0
-        val procFee = processingFee.value?.toDoubleOrNull() ?: 0.0
-        val emiMonthsVal = emiMonths.value?.toIntOrNull() ?: 0
-        val isInsurance = motorInsuranceChecked.value == true
+        val downPayPercentVal = downPayment.value?.toDoubleOrNull() ?: 0.0
+        val procFeeVal = processingFee.value?.toDoubleOrNull() ?: 0.0
+        val emiMonthsValInt = emiMonths.value?.toIntOrNull() ?: 0
+        val insurancePercent = insurance.value?.toDoubleOrNull() ?: 0.0
+        val isInsurance = motorInsurance.value == true
 
+        // Calculations
         val afterDiscount = if (disc > amt) amt else amt - disc
-        val insurance = if (isInsurance) (afterDiscount * 2.5 / 100) else 0.0
-        val total = afterDiscount + insurance
-        val downPay = (total * downPayPercent / 100)
+        val insuranceAmount = if (isInsurance) (afterDiscount * insurancePercent / 100) else 0.0
+        val total = afterDiscount + insuranceAmount
+        val downPay = (total * downPayPercentVal / 100)
         val financeAmt = total - downPay
-        val financePercent = if (downPay < 100) (100 - downPayPercent) else 0.0
-        val processFee = (financeAmt * procFee / 100)
+        val financePercentVal = if (downPayPercentVal < 100) (100 - downPayPercentVal) else 0.0
+        val processFee = (financeAmt * procFeeVal / 100)
         val totalDownPay = downPay + processFee
-        val emiYear = emiMonthsVal / 12
-        val totalInterest = (financeAmt * intRate / 100) * emiYear
-        val emiAmt = if (emiMonthsVal > 0) (financeAmt + totalInterest) / emiMonthsVal else 0.0
+        val emiYearVal = emiMonthsValInt / 12
+        val totalInterest = (financeAmt * intRateVal / 100) * emiYearVal
+        val emiAmt = if (emiMonthsValInt > 0) (financeAmt + totalInterest) / emiMonthsValInt else 0.0
 
-        val fmt = "%.2f" // format to 2 decimals
 
-        result.value = """
-            Vehicle Price: ${fmt.format(amt)}
-            Discount: ${fmt.format(disc)}
-            Net Vehicle After OFFER: ${fmt.format(afterDiscount)}
-            Motor Insurance (2.5%): ${fmt.format(insurance)}
-            TOTAL PRICE: ${fmt.format(total)}
-            Down Payment (${fmt.format(downPayPercent)}%): ${fmt.format(downPay)}
-            Finance Amount (${fmt.format(financePercent)}%): ${fmt.format(financeAmt)}
-            Processing Fee (${fmt.format(procFee)}%): ${fmt.format(processFee)}
-            Total Down Payment: ${fmt.format(totalDownPay)}
-            Interest (${fmt.format(intRate)}%): ${fmt.format(totalInterest)}
-            EMI: $emiYear years ($emiMonthsVal months)
-            Amount per month: ${fmt.format(emiAmt)}
-        """.trimIndent() }
+        // Update LiveData with QAR-formatted values
+        formattedAmt.value = formatAsQar(amt)
+        formattedDisc.value = formatAsQar(disc)
+        formattedAfterDiscount.value = formatAsQar(afterDiscount)
+        formattedInsurance.value = formatAsQar(insuranceAmount)
+        formattedTotal.value = formatAsQar(total)
+        formattedDownPay.value = formatAsQar(downPay)
+        formattedFinanceAmt.value = formatAsQar(financeAmt)
+        formattedProcessFee.value = formatAsQar(processFee)
+        formattedTotalDownPay.value = formatAsQar(totalDownPay)
+        formattedTotalInterest.value = formatAsQar(totalInterest)
+        formattedEmiAmt.value = formatAsQar(emiAmt)
+
+        // Percentages remain the same
+        downPayPercent.value = "%.2f".format(downPayPercentVal)
+        financePercent.value = "%.2f".format(financePercentVal)
+        procFee.value = "%.2f".format(procFeeVal)
+        intRate.value = "%.2f".format(intRateVal)
+
+        // EMI period
+        emiYear.value = emiYearVal.toString()
+        emiMonthsVal.value = emiMonthsValInt.toString()
+    }
 }
