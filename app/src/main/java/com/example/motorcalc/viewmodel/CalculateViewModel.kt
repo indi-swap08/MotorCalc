@@ -1,11 +1,8 @@
 package com.example.motorcalc.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.lang.System.console
 import java.text.NumberFormat
-import java.util.Currency
 import java.util.Locale
 
 class CalculateViewModel : ViewModel() {
@@ -18,6 +15,8 @@ class CalculateViewModel : ViewModel() {
     val emiMonths = MutableLiveData<String>()
     val motorInsurance = MutableLiveData<Boolean>()
     val insurance = MutableLiveData<String>()
+
+    val showInsuranceRow = MutableLiveData<Boolean>()
 
     // Formatted result fields
     val formattedAmt = MutableLiveData<String>()
@@ -37,11 +36,6 @@ class CalculateViewModel : ViewModel() {
     val emiYear = MutableLiveData<String>()
     val emiMonthsVal = MutableLiveData<String>()
     val formattedEmiAmt = MutableLiveData<String>()
-
-//    private val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault()).apply {
-//        maximumFractionDigits = 2
-//        minimumFractionDigits = 2
-//    }
 
     // Custom QAR formatter (English format)
     private val qarFormatter: NumberFormat by lazy {
@@ -91,6 +85,8 @@ class CalculateViewModel : ViewModel() {
         formattedTotalDownPay.value = formatAsQar(totalDownPay)
         formattedTotalInterest.value = formatAsQar(totalInterest)
         formattedEmiAmt.value = formatAsQar(emiAmt)
+
+        showInsuranceRow.value = isInsurance
 
         // Percentages remain the same
         downPayPercent.value = "%.2f".format(downPayPercentVal)

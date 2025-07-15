@@ -5,6 +5,7 @@
     tools:context=".MainActivity"
     >
     <data>
+        <import type="android.view.View"/>
         <variable
             name="calc_vm"
             type="com.example.motorcalc.viewmodel.CalculateViewModel" />
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:padding="21dp"
+            android:padding="12dp"
             android:text="@string/app_name"
             android:textColor="@color/onPrimary"
             android:background="@drawable/gradient_red"
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             app:cardBackgroundColor="@color/card"
             app:cardCornerRadius="16dp">
 
@@ -45,7 +46,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="25dp">
+                android:padding="12dp">
 
                 <!-- 1. Amount (Full Width) -->
                 <com.google.android.material.textfield.TextInputLayout
@@ -74,7 +75,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/hint_downPayment"
                     app:layout_constraintBottom_toTopOf="@id/processingFeeLayout"
                     app:layout_constraintEnd_toStartOf="@+id/interestLayout"
@@ -94,7 +95,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginStart="8dp"
                     android:hint="@string/hint_interest"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +117,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/hint_processingFee"
                     app:layout_constraintEnd_toStartOf="@id/emiMonthsLayout"
                     app:layout_constraintStart_toStartOf="parent"
@@ -138,8 +139,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
                     android:hint="@string/hint_emi"
                     app:layout_constraintBottom_toTopOf="@+id/discountLayout"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +161,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/hint_discount"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +180,7 @@
                     android:id="@+id/motorInsurance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:checked="@={calc_vm.motorInsurance}"
                     android:text="@string/text_addInsurance"
                     app:layout_constraintStart_toStartOf="parent"
@@ -192,7 +193,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/text_insurance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/motorInsurance"
@@ -211,7 +212,7 @@
                     android:id="@+id/submit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="12dp"
                     android:text="@string/text_submit"
                     app:cornerRadius="16dp"
                     android:letterSpacing="0.1"
@@ -242,12 +243,13 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="12dp"
                 android:stretchColumns="1">
 
                 <!-- Vehicle Price -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_vehicle_price"
                         android:textStyle="bold"/>
                     <TextView
@@ -260,6 +262,7 @@
                 <!-- Discount -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_discount"
                         android:textStyle="bold"/>
                     <TextView
@@ -271,6 +274,7 @@
                 <!-- Net Vehicle After OFFER -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_net_vehicle"
                         android:textStyle="bold"/>
                     <TextView
@@ -280,8 +284,9 @@
                 </TableRow>
 
                 <!-- Motor Insurance -->
-                <TableRow>
+                <TableRow android:visibility="@{calc_vm.showInsuranceRow ? View.VISIBLE : View.GONE}">
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_motor_insurance"
                         android:textStyle="bold"/>
                     <TextView
@@ -293,6 +298,7 @@
                 <!-- TOTAL PRICE -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_total_price"
                         android:textStyle="bold"
                         android:textColor="@color/textPrimary"/>
@@ -313,6 +319,7 @@
                 <!-- Down Payment -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -324,6 +331,7 @@
                 <!-- Finance Amount -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -335,6 +343,7 @@
                 <!-- Processing Fee -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_processing_fee"
                         android:textStyle="bold"/>
                     <TextView
@@ -346,6 +355,7 @@
                 <!-- Total Down Payment -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_total_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -357,6 +367,7 @@
                 <!-- Interest -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_interest"
                         android:textStyle="bold"/>
                     <TextView
@@ -368,6 +379,7 @@
                 <!-- EMI -->
                 <TableRow>
                     <TextView
+                        android:layout_marginBottom="10dp"
                         android:text="@string/label_emi"
                         android:textStyle="bold"/>
                     <TextView
