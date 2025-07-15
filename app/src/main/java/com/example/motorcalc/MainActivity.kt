@@ -1,6 +1,5 @@
 package com.example.motorcalc
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -25,17 +24,17 @@ class MainActivity : AppCompatActivity() {
         binding.calcVm = viewModel
         binding.lifecycleOwner = this
 
-        binding.insuranceLayout.visibility = View.GONE
-        viewModel.downPayment.value = "15"
-        viewModel.interest.value = "7.5"
-        viewModel.processingFee.value = "1.5"
-        viewModel.emiMonths.value = "48"
-        viewModel.insurance.value = "2.5"
+        setDefaultValues()
+
+        binding.clear.setOnClickListener {
+            setDefaultValues()
+        }
 
         binding.submit.setOnClickListener {
             viewModel.calculate()
             binding.resultCard.visibility = View.VISIBLE
         }
+
         viewModel.motorInsurance.observe(this) { isChecked ->
             val animation = if (isChecked == true) {
                 AnimationUtils.loadAnimation(this, R.anim.fade_in)
@@ -43,7 +42,22 @@ class MainActivity : AppCompatActivity() {
                 AnimationUtils.loadAnimation(this, R.anim.fade_out)
             }
             binding.insuranceLayout.startAnimation(animation)
-            binding.insuranceLayout.visibility = if (isChecked == true) View.VISIBLE else View.GONE
+            binding.insuranceLayout.visibility = if (isChecked == true) View.VISIBLE else View.INVISIBLE
         }
     }
+    private fun setDefaultValues() {
+        with(viewModel) {
+            motorInsurance.value = false
+            amount.value = ""
+            discount.value = ""
+            downPayment.value = "15"
+            interest.value = "7.5"
+            processingFee.value = "1.5"
+            emiMonths.value = "48"
+            insurance.value = "2.5"
+        }
+        binding.insuranceLayout.visibility = View.INVISIBLE
+        binding.resultCard.visibility = View.GONE
+    }
 }
+

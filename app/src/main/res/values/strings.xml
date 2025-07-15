@@ -8,6 +8,7 @@
     <string name="hint_emi">EMI (Months)</string>
     <string name="text_addInsurance">Add Motor Insurance</string>
     <string name="text_insurance">Insurance(%)</string>
+    <string name="text_clear">Clear</string>
     <string name="text_submit">Calculate</string>
 
     <!-- for results table -->

@@ -20,4 +20,7 @@
     <color name="divider">#EEEEEE</color>
     <color name="lightHighlight">#FFF5F5</color>
 
+    <color name="buttonSecondary">#BFF1F6FF</color>
+    <color name="buttonSecondaryRipple">#40FFFFFF</color>  <!-- Translucent white -->
+
 </resources>

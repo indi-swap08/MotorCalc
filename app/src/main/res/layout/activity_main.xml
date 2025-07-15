@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:padding="12dp"
+            android:padding="10dp"
             android:text="@string/app_name"
             android:textColor="@color/onPrimary"
             android:background="@drawable/gradient_red"
@@ -38,14 +38,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             app:cardBackgroundColor="@color/card"
             app:cardCornerRadius="16dp">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="12dp">
 
                 <!-- 1. Amount (Full Width) -->
@@ -95,12 +95,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
                     android:hint="@string/hint_interest"
+                    app:layout_constraintBottom_toTopOf="@id/emiMonthsLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/downPaymentLayout"
-                    app:layout_constraintBottom_toTopOf="@id/emiMonthsLayout"
                     app:layout_constraintTop_toBottomOf="@id/amountLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -119,9 +119,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:hint="@string/hint_processingFee"
+                    app:layout_constraintBottom_toTopOf="@id/discountLayout"
                     app:layout_constraintEnd_toStartOf="@id/emiMonthsLayout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/discountLayout"
                     app:layout_constraintTop_toBottomOf="@id/downPaymentLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -208,19 +208,37 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- 8. Submit Button (Full Width) -->
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clear"
+                    style="@style/Widget.MotorCalc.Button.Icon"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    app:icon="@drawable/ic_clear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/submit"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/motorInsurance"
+                    app:layout_constraintVertical_bias="1.0" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/submit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/text_submit"
-                    app:cornerRadius="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
                     android:letterSpacing="0.1"
+                    android:text="@string/text_submit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/motorInsurance" />
+                    app:layout_constraintStart_toEndOf="@id/clear"
+                    app:layout_constraintTop_toBottomOf="@+id/insuranceLayout"
+                    app:layout_constraintVertical_bias="0.204" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -249,7 +267,7 @@
                 <!-- Vehicle Price -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_vehicle_price"
                         android:textStyle="bold"/>
                     <TextView
@@ -262,7 +280,7 @@
                 <!-- Discount -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_discount"
                         android:textStyle="bold"/>
                     <TextView
@@ -274,7 +292,7 @@
                 <!-- Net Vehicle After OFFER -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_net_vehicle"
                         android:textStyle="bold"/>
                     <TextView
@@ -286,11 +304,11 @@
                 <!-- Motor Insurance -->
                 <TableRow android:visibility="@{calc_vm.showInsuranceRow ? View.VISIBLE : View.GONE}">
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_motor_insurance"
                         android:textStyle="bold"/>
                     <TextView
-                        android:text='@{String.format("%s%%: %s", calc_vm.insurance, calc_vm.formattedInsurance)}'
+                        android:text='@{String.format("%s%% : %s", calc_vm.insurancePercent, calc_vm.formattedInsurance)}'
                         android:gravity="end"
                         android:textColor="@color/textPrimary"/>
                 </TableRow>
@@ -298,7 +316,7 @@
                 <!-- TOTAL PRICE -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_total_price"
                         android:textStyle="bold"
                         android:textColor="@color/textPrimary"/>
@@ -319,7 +337,7 @@
                 <!-- Down Payment -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -331,7 +349,7 @@
                 <!-- Finance Amount -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -343,7 +361,7 @@
                 <!-- Processing Fee -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_processing_fee"
                         android:textStyle="bold"/>
                     <TextView
@@ -355,7 +373,7 @@
                 <!-- Total Down Payment -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_total_down_payment"
                         android:textStyle="bold"/>
                     <TextView
@@ -367,11 +385,11 @@
                 <!-- Interest -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_interest"
                         android:textStyle="bold"/>
                     <TextView
-                        android:text='@{String.format("%s%%: %s", calc_vm.intRate, calc_vm.formattedTotalInterest)}'
+                        android:text='@{String.format("%s%% : %s", calc_vm.intRate, calc_vm.formattedTotalInterest)}'
                         android:gravity="end"
                         android:textColor="@color/textPrimary"/>
                 </TableRow>
@@ -379,7 +397,7 @@
                 <!-- EMI -->
                 <TableRow>
                     <TextView
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/label_emi"
                         android:textStyle="bold"/>
                     <TextView

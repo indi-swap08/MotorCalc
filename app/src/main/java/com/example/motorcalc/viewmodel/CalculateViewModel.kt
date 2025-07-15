@@ -23,6 +23,8 @@ class CalculateViewModel : ViewModel() {
     val formattedDisc = MutableLiveData<String>()
     val formattedAfterDiscount = MutableLiveData<String>()
     val formattedInsurance = MutableLiveData<String>()
+
+    val insurancePercent = MutableLiveData<String>()
     val formattedTotal = MutableLiveData<String>()
     val downPayPercent = MutableLiveData<String>()
     val formattedDownPay = MutableLiveData<String>()
@@ -56,12 +58,12 @@ class CalculateViewModel : ViewModel() {
         val downPayPercentVal = downPayment.value?.toDoubleOrNull() ?: 0.0
         val procFeeVal = processingFee.value?.toDoubleOrNull() ?: 0.0
         val emiMonthsValInt = emiMonths.value?.toIntOrNull() ?: 0
-        val insurancePercent = insurance.value?.toDoubleOrNull() ?: 0.0
+        val insuranceVal = insurance.value?.toDoubleOrNull() ?: 0.0
         val isInsurance = motorInsurance.value == true
 
         // Calculations
         val afterDiscount = if (disc > amt) amt else amt - disc
-        val insuranceAmount = if (isInsurance) (afterDiscount * insurancePercent / 100) else 0.0
+        val insuranceAmount = if (isInsurance) (afterDiscount * insuranceVal / 100) else 0.0
         val total = afterDiscount + insuranceAmount
         val downPay = (total * downPayPercentVal / 100)
         val financeAmt = total - downPay
@@ -89,6 +91,7 @@ class CalculateViewModel : ViewModel() {
         showInsuranceRow.value = isInsurance
 
         // Percentages remain the same
+        insurancePercent.value = "%.2f".format(insuranceVal)
         downPayPercent.value = "%.2f".format(downPayPercentVal)
         financePercent.value = "%.2f".format(financePercentVal)
         procFee.value = "%.2f".format(procFeeVal)

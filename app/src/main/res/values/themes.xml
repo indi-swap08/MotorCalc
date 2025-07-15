@@ -34,10 +34,17 @@
         <item name="actionBarTheme">@style/ThemeOverlay.MotorCalc.ActionBar</item>
     </style>
 
-    <!-- Button Style -->
+    <!-- Primary Button Style -->
     <style name="Widget.MotorCalc.Button" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/buttonPrimary</item>
         <item name="android:textColor">@color/onButton</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.MotorCalc.Button.Icon" parent="Widget.MotorCalc.Button">
+        <item name="backgroundTint">@color/buttonSecondary</item>
+        <item name="iconTint">@color/primaryRed</item>
+        <item name="iconSize">24dp</item>
         <item name="cornerRadius">8dp</item>
     </style>
 
