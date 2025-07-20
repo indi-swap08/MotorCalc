@@ -29,4 +29,8 @@
     <string name="format_percentage_value">%1$s%%: %2$s</string>
     <string name="format_percentage_value_spaced">%1$s%% : %2$s</string>
     <string name="format_years_months">%1$s years (%2$s months)</string>
+
+    <!-- Error Message-->
+    <string name="err_text_no_price">No vehicle price entered!</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.example.motorcalc.viewmodel
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.text.NumberFormat
@@ -15,8 +16,9 @@ class CalculateViewModel : ViewModel() {
     val emiMonths = MutableLiveData<String>()
     val motorInsurance = MutableLiveData<Boolean>()
     val insurance = MutableLiveData<String>()
-
     val showInsuranceRow = MutableLiveData<Boolean>()
+
+    val showNoPriceMessage = ObservableBoolean(false)
 
     // Formatted result fields
     val formattedAmt = MutableLiveData<String>()

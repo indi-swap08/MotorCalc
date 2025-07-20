@@ -23,4 +23,11 @@
     <color name="buttonSecondary">#BFF1F6FF</color>
     <color name="buttonSecondaryRipple">#40FFFFFF</color>  <!-- Translucent white -->
 
+    <color name="error_redd">#FBE4E4</color>
+    <color name="error_red">#AB3838</color>
+
+    <color name="warning_orange">#FFA500</color>
+    <color name="warning_background">#30FFA500</color>
+
+
 </resources>

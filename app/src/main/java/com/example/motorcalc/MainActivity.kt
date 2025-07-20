@@ -6,6 +6,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.motorcalc.databinding.ActivityMainBinding
+import com.example.motorcalc.utils.InputFilterMax
 import com.example.motorcalc.viewmodel.CalculateViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,14 +26,24 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         setDefaultValues()
+        addFieldValidtation()
 
         binding.clear.setOnClickListener {
             setDefaultValues()
         }
 
         binding.submit.setOnClickListener {
-            viewModel.calculate()
-            binding.resultCard.visibility = View.VISIBLE
+            if (viewModel.amount.value?.isEmpty() == true || viewModel.amount.value?.toDoubleOrNull() == 0.0) {
+                viewModel.showNoPriceMessage.set(true)
+                // Hide results if shown
+                binding.resultCard.visibility = View.GONE
+            } else {
+                viewModel.showNoPriceMessage.set(false)
+
+                // Proceed with normal calculations
+                viewModel.calculate()
+                binding.resultCard.visibility = View.VISIBLE
+            }
         }
 
         viewModel.motorInsurance.observe(this) { isChecked ->
@@ -47,7 +58,10 @@ class MainActivity : AppCompatActivity() {
     }
     private fun setDefaultValues() {
         with(viewModel) {
-            motorInsurance.value = false
+            if(motorInsurance.value == true){
+                motorInsurance.value = false
+                binding.insuranceLayout.visibility = View.INVISIBLE
+            }
             amount.value = ""
             discount.value = ""
             downPayment.value = "15"
@@ -56,8 +70,15 @@ class MainActivity : AppCompatActivity() {
             emiMonths.value = "48"
             insurance.value = "2.5"
         }
-        binding.insuranceLayout.visibility = View.INVISIBLE
         binding.resultCard.visibility = View.GONE
     }
+
+    private fun addFieldValidtation() {
+        binding.downPayment.filters = arrayOf(InputFilterMax(100.0))
+        binding.interest.filters = arrayOf(InputFilterMax(100.0))
+        binding.insurance.filters = arrayOf(InputFilterMax(100.0))
+        binding.processingFee.filters = arrayOf(InputFilterMax(100.0))
+    }
+
 }
 
